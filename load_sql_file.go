@@ -8,7 +8,7 @@ import (
 	"io/ioutil"
 )
 
-func loadFromFile(filePath string) (sqlExpressions []string) {
+func LoadFromFile(filePath string) (sqlExpressions []string) {
 	fb, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		return
@@ -17,7 +17,7 @@ func loadFromFile(filePath string) (sqlExpressions []string) {
 	return
 }
 
-func loadFromString(content string) (sqlExpressions []string) {
+func LoadFromString(content string) (sqlExpressions []string) {
 	sqlExpressions = generatorSqlExpress(filterAnnotation(content))
 	return
 }
