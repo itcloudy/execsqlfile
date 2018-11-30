@@ -4,19 +4,42 @@
 package execsqlfile
 
 import (
+	"database/sql"
 	"io/ioutil"
 )
 
-func LoadFromFile(filePath string) (sqlExpressions []string) {
+func loadFromFile(filePath string) (sqlExpressions []string) {
 	fb, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		return
 	}
-	sqlExpressions = GeneratorSqlExpress(FilterAnnotation(string(fb)))
+	sqlExpressions = generatorSqlExpress(filterAnnotation(string(fb)))
 	return
 }
 
-func LoadFromString(content string) (sqlExpressions []string) {
-	sqlExpressions = GeneratorSqlExpress(FilterAnnotation(content))
+func loadFromString(content string) (sqlExpressions []string) {
+	sqlExpressions = generatorSqlExpress(filterAnnotation(content))
 	return
+}
+func ExecSqlExpressionFromFile(filename string,db *sql.DB) (err error) {
+	sqlExpressions := loadFromFile(filename)
+	for _,expression :=range sqlExpressions{
+		_,err = db.Exec(expression)
+		if err !=nil{
+			break
+		}
+
+	}
+	return err
+}
+func ExecSqlExpressionFromString(content string,db *sql.DB) (err error) {
+	sqlExpressions :=  loadFromString(content)
+	for _,expression :=range sqlExpressions{
+		_,err = db.Exec(expression)
+		if err !=nil{
+			break
+		}
+
+	}
+	return err
 }

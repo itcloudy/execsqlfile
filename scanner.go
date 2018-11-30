@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func FilterAnnotation(content string) (sqlLines []string) {
+func filterAnnotation(content string) (sqlLines []string) {
 	// split content by \n
 	lines := strings.Split(content, "\n")
 	// trim space  and filter line annotation
@@ -54,7 +54,7 @@ func FilterAnnotation(content string) (sqlLines []string) {
 
 	return
 }
-func GeneratorSqlExpress(sqlLines []string) (sqlExpressions []string) {
+func generatorSqlExpress(sqlLines []string) (sqlExpressions []string) {
 	var sqlEnd bool
 	var sqlExpression string
 	for _, line := range sqlLines {
